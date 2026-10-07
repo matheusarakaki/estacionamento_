@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Estacionamento</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments :: header('login')}"></header>
+<main class="pagina estreita">
+    <form class="form-card flutuante" method="post" th:action="@{/autenticar}">
+        <h2>Login</h2>
+        <input type="text" id="email" name="email" placeholder="Digite seu e-mail" required> <br>
+        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required> <br>
+        <button type="submit">Logar</button>
+        <h3>Não tem cadastro? <a th:href="@{/cadastro}">Clique Aqui</a></h3>
+    </form>
+</main>
+</body>
+</html>

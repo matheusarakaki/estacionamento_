@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro realizado - Estacionamento</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments :: header('cadastro')}"></header>
+<main class="pagina estreita">
+    <div class="card centro">
+        <h2 class="titulo-ok">✅ Cadastro realizado com sucesso!</h2>
+        <p class="muted">Agora é só entrar com seu e-mail e senha.</p>
+        <a class="btn btn-entrada" th:href="@{/}">Ir para o login</a>
+    </div>
+</main>
+</body>
+</html>

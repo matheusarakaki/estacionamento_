@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar saída - Estacionamento</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body class="app">
+<header th:replace="~{fragments :: header('saida')}"></header>
+<main class="pagina">
+    <h1 class="titulo">Registrar saída de veículo</h1>
+
+    <div class="alerta alerta-ok" th:if="${sucesso}" th:text="${sucesso}">Sucesso</div>
+    <div class="alerta alerta-erro" th:if="${erro}" th:text="${erro}">Erro</div>
+
+    <section class="card">
+        <div class="card-head">
+            <h2>Veículos no estacionamento</h2>
+            <span class="badge" th:text="${#lists.size(veiculos)}">0</span>
+        </div>
+        <div class="tabela-wrap">
+            <table class="tabela-veiculos">
+                <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Modelo</th>
+                    <th>Cor</th>
+                    <th>Observações</th>
+                    <th>Entrada</th>
+                    <th>Tempo</th>
+                    <th>Ação</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="v : ${veiculos}">
+                    <td><strong th:text="${v.placa}">ABC-1234</strong></td>
+                    <td th:text="${v.modelo}">Gol</td>
+                    <td th:text="${v.cor}">Preto</td>
+                    <td th:text="${v.observacao}">-</td>
+                    <td th:text="${#temporals.format(v.dataHoraEntrada, 'dd/MM/yyyy HH:mm')}">01/01/2026 08:00</td>
+                    <td th:text="${v.permanencia}">1h 20min</td>
+                    <td>
+                        <button type="button" class="btn btn-saida btn-saida-abrir"
+                                th:data-action="@{/veiculo/saida/{id}(id=${v.id})}"
+                                th:data-info="${v.placa + ' - ' + v.modelo + ' ' + v.cor}">
+                            Registrar saída
+                        </button>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(veiculos)}">
+                    <td colspan="7" class="vazio">Nenhum veículo estacionado no momento.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="actions">
+        <a th:href="@{/painel}" class="btn btn-secondary">← Voltar ao painel</a>
+    </div>
+</main>
+
+<!-- Confirmação antes de registrar a saída -->
+<dialog id="modal-saida" class="modal">
+    <form method="post" id="form-saida" class="modal-form">
+        <h3>Confirmar saída</h3>
+        <p>Deseja realmente registrar a saída do veículo<br><strong id="modal-info"></strong>?</p>
+        <div class="modal-acoes">
+            <button type="button" class="btn btn-secondary" id="modal-cancelar">Cancelar</button>
+            <button type="submit" class="btn btn-saida">Confirmar saída</button>
+        </div>
+    </form>
+</dialog>
+
+<script>
+    (function () {
+        var modal = document.getElementById('modal-saida');
+        var form = document.getElementById('form-saida');
+        var info = document.getElementById('modal-info');
+
+        document.querySelectorAll('.btn-saida-abrir').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var action = btn.getAttribute('data-action');
+                var texto = btn.getAttribute('data-info');
+                if (typeof modal.showModal !== 'function') {
+                    // navegador antigo sem <dialog>: usa confirmação simples
+                    if (confirm('Deseja realmente registrar a saída de ' + texto + '?')) {
+                        form.setAttribute('action', action);
+                        form.submit();
+                    }
+                    return;
+                }
+                form.setAttribute('action', action);
+                info.textContent = texto;
+                modal.showModal();
+            });
+        });
+
+        document.getElementById('modal-cancelar').addEventListener('click', function () {
+            modal.close();
+        });
+        // clicar fora da caixa também cancela
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) { modal.close(); }
+        });
+    })();
+</script>
+</body>
+</html>

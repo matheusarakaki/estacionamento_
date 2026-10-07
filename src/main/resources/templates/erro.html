@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro - Estacionamento</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header th:replace="~{fragments :: header('login')}"></header>
+<main class="pagina estreita">
+    <div class="card centro">
+        <h2 class="titulo-erro">Usuário ou senha inválidos</h2>
+        <a class="btn btn-primary" th:href="@{/}">Tentar novamente</a>
+    </div>
+</main>
+</body>
+</html>

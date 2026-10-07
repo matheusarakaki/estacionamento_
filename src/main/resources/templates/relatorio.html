@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório - Estacionamento</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body class="app">
+<header th:replace="~{fragments :: header('relatorio')}"></header>
+<main class="pagina">
+    <div class="titulo-linha">
+        <div>
+            <h1 class="titulo">Relatório geral</h1>
+            <p class="muted">Gerado em <span th:text="${#temporals.format(relatorio.geradoEm(), 'dd/MM/yyyy HH:mm')}">01/01/2026 10:00</span></p>
+        </div>
+        <button type="button" class="btn btn-secondary no-print" onclick="window.print()">🖨️ Imprimir</button>
+    </div>
+
+    <!-- Resumo -->
+    <div class="stats">
+        <div class="stat"><div class="num" th:text="${relatorio.total()}">0</div><div class="rot">Total de registros</div></div>
+        <div class="stat stat-verde"><div class="num" th:text="${relatorio.estacionados()}">0</div><div class="rot">Estacionados agora</div></div>
+        <div class="stat stat-laranja"><div class="num" th:text="${relatorio.saidas()}">0</div><div class="rot">Saídas realizadas</div></div>
+        <div class="stat"><div class="num" th:text="${relatorio.placasDistintas()}">0</div><div class="rot">Veículos diferentes</div></div>
+        <div class="stat"><div class="num" th:text="${relatorio.entradasHoje()}">0</div><div class="rot">Entradas hoje</div></div>
+        <div class="stat"><div class="num" th:text="${relatorio.saidasHoje()}">0</div><div class="rot">Saídas hoje</div></div>
+        <div class="stat"><div class="num" th:text="${relatorio.permanenciaMedia()}">-</div><div class="rot">Permanência média</div></div>
+        <div class="stat"><div class="num" th:text="${relatorio.maiorPermanencia()}">-</div><div class="rot">Maior permanência</div></div>
+        <div class="stat"><div class="num" th:text="${relatorio.horarioPico()}">-</div><div class="rot">Horário de pico (entradas)</div></div>
+    </div>
+
+    <div class="grade-2">
+        <section class="card">
+            <h2>Entradas nos últimos 7 dias</h2>
+            <div th:replace="~{fragments :: barras(${relatorio.entradasUltimosDias()})}"></div>
+        </section>
+        <section class="card">
+            <h2>Entradas por horário</h2>
+            <div th:replace="~{fragments :: barras(${relatorio.entradasPorHora()})}"></div>
+        </section>
+        <section class="card">
+            <h2>Modelos mais frequentes</h2>
+            <div th:replace="~{fragments :: barras(${relatorio.topModelos()})}"></div>
+        </section>
+        <section class="card">
+            <h2>Cores mais frequentes</h2>
+            <div th:replace="~{fragments :: barras(${relatorio.topCores()})}"></div>
+        </section>
+        <section class="card">
+            <h2>Placas com mais visitas</h2>
+            <div th:replace="~{fragments :: barras(${relatorio.topPlacas()})}"></div>
+        </section>
+    </div>
+</main>
+</body>
+</html>

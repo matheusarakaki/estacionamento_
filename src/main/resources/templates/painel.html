@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel - Estacionamento</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body class="app">
+<header th:replace="~{fragments :: header('painel')}"></header>
+<main class="pagina">
+    <h1 class="titulo">Painel</h1>
+
+    <div class="alerta alerta-ok" th:if="${sucesso}" th:text="${sucesso}">Sucesso</div>
+
+    <div class="acoes">
+        <a class="btn btn-entrada btn-grande" th:href="@{/veiculo/entrada}">➕ Registrar entrada</a>
+        <a class="btn btn-saida btn-grande" th:href="@{/veiculo/registrar-saida}">➖ Registrar saída</a>
+    </div>
+
+    <section class="card">
+        <div class="card-head">
+            <h2>Veículos no estacionamento agora</h2>
+            <span class="badge" th:text="${#lists.size(veiculos)}">0</span>
+        </div>
+        <div class="tabela-wrap">
+            <table class="tabela-veiculos">
+                <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Modelo</th>
+                    <th>Cor</th>
+                    <th>Observações</th>
+                    <th>Entrada</th>
+                    <th>Tempo</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="v : ${veiculos}">
+                    <td><strong th:text="${v.placa}">ABC-1234</strong></td>
+                    <td th:text="${v.modelo}">Gol</td>
+                    <td th:text="${v.cor}">Preto</td>
+                    <td th:text="${v.observacao}">-</td>
+                    <td th:text="${#temporals.format(v.dataHoraEntrada, 'dd/MM/yyyy HH:mm')}">01/01/2026 08:00</td>
+                    <td th:text="${v.permanencia}">1h 20min</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(veiculos)}">
+                    <td colspan="6" class="vazio">Nenhum veículo estacionado no momento.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

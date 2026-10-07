@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros - Estacionamento</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body class="app">
+<header th:replace="~{fragments :: header('registros')}"></header>
+<main class="pagina">
+    <h1 class="titulo">Registros</h1>
+
+    <section class="card">
+        <div class="card-head">
+            <h2>Todos os veículos que passaram pelo estacionamento</h2>
+            <span class="badge" th:text="${#lists.size(registros)}">0</span>
+        </div>
+
+        <input type="text" id="filtro" class="filtro" placeholder="🔎 Filtrar por placa, modelo, cor...">
+
+        <div class="tabela-wrap">
+            <table class="tabela-veiculos" id="tabela-registros">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Placa</th>
+                    <th>Modelo</th>
+                    <th>Cor</th>
+                    <th>Observações</th>
+                    <th>Entrada</th>
+                    <th>Saída</th>
+                    <th>Permanência</th>
+                    <th>Situação</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="v : ${registros}">
+                    <td th:text="${v.id}">1</td>
+                    <td><strong th:text="${v.placa}">ABC-1234</strong></td>
+                    <td th:text="${v.modelo}">Gol</td>
+                    <td th:text="${v.cor}">Preto</td>
+                    <td th:text="${v.observacao}">-</td>
+                    <td th:text="${#temporals.format(v.dataHoraEntrada, 'dd/MM/yyyy HH:mm')}">01/01/2026 08:00</td>
+                    <td>
+                        <span th:if="${v.dataHoraSaida != null}"
+                              th:text="${#temporals.format(v.dataHoraSaida, 'dd/MM/yyyy HH:mm')}">01/01/2026 10:00</span>
+                        <span th:if="${v.dataHoraSaida == null}">—</span>
+                    </td>
+                    <td th:text="${v.permanencia}">2h 0min</td>
+                    <td>
+                        <span class="status status-estacionado" th:if="${v.estacionado}">Estacionado</span>
+                        <span class="status status-saiu" th:unless="${v.estacionado}">Saiu</span>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(registros)}">
+                    <td colspan="9" class="vazio">Nenhum registro ainda.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script>
+    document.getElementById('filtro').addEventListener('input', function (e) {
+        var termo = e.target.value.toLowerCase();
+        document.querySelectorAll('#tabela-registros tbody tr').forEach(function (tr) {
+            tr.style.display = tr.textContent.toLowerCase().indexOf(termo) === -1 ? 'none' : '';
+        });
+    });
+</script>
+</body>
+</html>

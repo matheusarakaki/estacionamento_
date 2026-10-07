@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Cabeçalho com o nome do estacionamento + abas (as abas só aparecem logado) -->
+<header th:fragment="header(ativo)" class="topbar">
+    <a class="marca" th:href="${session.usuarioNome != null} ? @{/painel} : @{/}">
+        🚗 <span th:text="${@environment.getProperty('estacionamento.nome', 'Estacionamento')}">Estacionamento</span>
+    </a>
+    <nav class="menu" th:if="${session.usuarioNome != null}">
+        <a th:href="@{/painel}" th:classappend="${ativo == 'painel'} ? 'ativo'">Painel</a>
+        <a th:href="@{/veiculo/registrar-saida}" th:classappend="${ativo == 'saida'} ? 'ativo'">Saídas</a>
+        <a th:href="@{/registros}" th:classappend="${ativo == 'registros'} ? 'ativo'">Registros</a>
+        <a th:href="@{/relatorio}" th:classappend="${ativo == 'relatorio'} ? 'ativo'">Relatório</a>
+        <span class="usuario" th:text="${session.usuarioNome}">Usuário</span>
+        <a class="sair" th:href="@{/logout}">Sair</a>
+    </nav>
+</header>
+
+<!-- Gráfico de barras simples (lista de ItemContagem) -->
+<div th:fragment="barras(itens)">
+    <ul class="barras" th:if="${!#lists.isEmpty(itens)}">
+        <li th:each="i : ${itens}">
+            <span class="rotulo" th:text="${i.rotulo()}" th:title="${i.rotulo()}">Rótulo</span>
+            <span class="barra"><span th:style="'width:' + ${i.percentual()} + '%'"></span></span>
+            <span class="valor" th:text="${i.quantidade()}">0</span>
+        </li>
+    </ul>
+    <p class="vazio" th:if="${#lists.isEmpty(itens)}">Ainda não há dados.</p>
+</div>
+
+</body>
+</html>

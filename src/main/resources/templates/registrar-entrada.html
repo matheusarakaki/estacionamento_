@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar entrada - Estacionamento</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body class="app">
+<header th:replace="~{fragments :: header('painel')}"></header>
+<main class="pagina estreita">
+    <form class="form-card" method="post" th:action="@{/veiculo/cadastrar}">
+        <h2>Registrar entrada</h2>
+        <div class="alerta alerta-erro" th:if="${erro}" th:text="${erro}">Erro</div>
+        <input type="text" id="placa" name="placa" placeholder="Digite a placa" maxlength="8"
+               style="text-transform: uppercase" th:value="${veiculo?.placa}" required> <br>
+        <input type="text" id="modelo" name="modelo" placeholder="Digite o modelo" th:value="${veiculo?.modelo}" required> <br>
+        <input type="text" id="cor" name="cor" placeholder="Digite a cor" th:value="${veiculo?.cor}" required> <br>
+        <input type="text" id="observacao" name="observacao" placeholder="Observações" th:value="${veiculo?.observacao}"> <br>
+        <button type="submit" class="btn-entrada-form">Registrar entrada</button>
+        <p class="voltar"><a th:href="@{/painel}">← Voltar ao painel</a></p>
+    </form>
+</main>
+</body>
+</html>

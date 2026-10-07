@@ -1,0 +1,517 @@
+/* ============================================================
+   ESTILOS UNIFICADOS - ESTACIONAMENTO
+   ============================================================ */
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --success: #10b981;
+  --success-hover: #059669;
+  --orange: #f97316;
+  --orange-hover: #ea580c;
+  --error: #ef4444;
+  --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #ffffff 100%);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #cbd5e1;
+  --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-main);
+  padding: 90px 20px 70px 20px;
+  animation: fadeIn 0.8s ease-out;
+  text-align: center;
+}
+
+/* Páginas internas: conteúdo alinhado ao topo e à esquerda */
+body.app {
+  justify-content: flex-start;
+  align-items: stretch;
+  text-align: left;
+}
+
+/* ============================================================
+   HEADER (nome do estacionamento + abas) E FOOTER
+   ============================================================ */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 12px 28px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  text-align: left;
+}
+
+.marca {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.marca:hover { text-decoration: none; }
+
+.menu {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.menu a {
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.menu a:hover {
+  background: #eff6ff;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.menu a.ativo {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.menu .usuario {
+  margin-left: 10px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.menu a.sair { color: var(--error); }
+.menu a.sair:hover { background: #fef2f2; color: var(--error); }
+
+body::after {
+  content: "© 2026 ETEC Sebrae - Estacionamento";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  color: var(--text-muted);
+  text-align: center;
+  padding: 12px 0;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+  z-index: 900;
+}
+
+/* ============================================================
+   LAYOUT DAS PÁGINAS
+   ============================================================ */
+.pagina {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.pagina.estreita { max-width: 460px; }
+
+h1.titulo {
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: var(--text-main);
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: 800;
+  animation: slideDown 0.6s ease-out;
+}
+
+h3 {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+a:hover { text-decoration: underline; }
+
+.muted { color: var(--text-muted); }
+
+/* ============================================================
+   CARDS E FORMULÁRIOS
+   ============================================================ */
+.card {
+  background: var(--card-bg);
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  margin-top: 24px;
+  text-align: left;
+}
+
+.card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0;
+  animation: none;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.card.centro { text-align: center; padding: 40px 30px; }
+.card.centro h2 { font-size: 1.6rem; margin-bottom: 16px; }
+.card.centro .btn { margin-top: 20px; }
+.titulo-ok { color: var(--success-hover); }
+.titulo-erro { color: var(--error); }
+
+.form-card {
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  text-align: center;
+  animation: zoomIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-card.flutuante {
+  animation: floatCard 4s ease-in-out infinite alternate, zoomIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-card .voltar { margin-top: 18px; font-size: 0.95rem; }
+
+input[type="text"],
+input[type="password"],
+input[type="date"] {
+  width: 100%;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  background-color: #ffffff;
+}
+
+input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.filtro { max-width: 380px; margin-bottom: 12px !important; }
+
+/* ============================================================
+   BOTÕES
+   ============================================================ */
+button, .btn-login {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  text-decoration: none;
+  display: inline-block;
+}
+
+button:hover, .btn-login:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+
+/* Botão "Cadastrar" e "Registrar entrada" em verde */
+.form-cadastro button,
+button.btn-entrada-form {
+  background-color: var(--success);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+.form-cadastro button:hover,
+button.btn-entrada-form:hover {
+  background-color: var(--success-hover);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+}
+
+/* Botões utilitários (links e botões) */
+.btn {
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 0;
+  padding: 11px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.btn:hover { text-decoration: none; }
+
+.btn-primary:hover { background-color: var(--primary-hover); }
+
+.btn-entrada { background-color: var(--success); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+.btn-entrada:hover { background-color: var(--success-hover); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4); }
+
+.btn-saida { background-color: var(--orange); box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); }
+.btn-saida:hover { background-color: var(--orange-hover); box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4); }
+
+.btn-secondary { background-color: #64748b; box-shadow: none; }
+.btn-secondary:hover { background-color: #475569; box-shadow: none; }
+
+.btn-grande { padding: 20px; font-size: 1.15rem; }
+
+/* Botões de entrada e saída lado a lado */
+.acoes {
+  display: flex;
+  gap: 16px;
+}
+
+.acoes .btn { flex: 1; }
+
+.actions { margin-top: 24px; }
+
+/* ============================================================
+   TABELAS
+   ============================================================ */
+.tabela-wrap { overflow-x: auto; }
+
+.tabela-veiculos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-veiculos th,
+.tabela-veiculos td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.tabela-veiculos th {
+  background-color: #f1f5f9;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.tabela-veiculos tbody tr:hover { background-color: #f8fafc; }
+
+.tabela-veiculos td.vazio {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 28px;
+}
+
+.vazio { color: var(--text-muted); }
+
+.badge {
+  background: var(--primary);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  min-width: 34px;
+  text-align: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.status {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.status-estacionado { background: #d1fae5; color: #047857; }
+.status-saiu { background: #e2e8f0; color: #475569; }
+
+/* ============================================================
+   ALERTAS
+   ============================================================ */
+.alerta {
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.alerta-ok { background: #d1fae5; color: #047857; }
+.alerta-erro { background: #fee2e2; color: #b91c1c; }
+
+/* ============================================================
+   MODAL DE CONFIRMAÇÃO
+   ============================================================ */
+.modal {
+  border: none;
+  border-radius: 20px;
+  padding: 0;
+  margin: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  max-width: 420px;
+  width: calc(100% - 40px);
+}
+
+.modal::backdrop { background: rgba(15, 23, 42, 0.5); }
+
+.modal-form { padding: 32px; text-align: center; }
+.modal-form h3 { font-size: 1.3rem; color: var(--text-main); font-weight: 800; margin: 0 0 12px; }
+.modal-form p { color: var(--text-muted); line-height: 1.5; }
+.modal-form strong { color: var(--text-main); }
+
+.modal-acoes {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.modal-acoes .btn { flex: 1; }
+
+/* ============================================================
+   RELATÓRIO
+   ============================================================ */
+.titulo-linha {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+}
+
+.stat {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--primary);
+}
+
+.stat .num { font-size: 1.9rem; font-weight: 800; }
+.stat .rot { color: var(--text-muted); font-size: 0.85rem; margin-top: 4px; }
+.stat-verde { border-left-color: var(--success); }
+.stat-laranja { border-left-color: var(--orange); }
+
+.grade-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.grade-2 .card { margin-top: 20px; }
+.grade-2 .card h2 { margin-bottom: 16px; }
+
+.barras { list-style: none; }
+
+.barras li {
+  display: grid;
+  grid-template-columns: minmax(70px, 130px) 1fr 40px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.barras .rotulo { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.barras .valor { text-align: right; font-weight: 700; }
+
+.barra {
+  display: block;
+  background: #e2e8f0;
+  border-radius: 999px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.barra span {
+  display: block;
+  height: 100%;
+  background: var(--primary);
+  border-radius: 999px;
+}
+
+/* ============================================================
+   ANIMAÇÕES
+   ============================================================ */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes zoomIn { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes floatCard { 0% { transform: translateY(0px); } 100% { transform: translateY(-8px); } }
+
+/* ============================================================
+   RESPONSIVO E IMPRESSÃO
+   ============================================================ */
+@media (max-width: 700px) {
+  body.app { padding-top: 130px; }
+  .topbar { padding: 10px 14px; }
+  .form-card { padding: 28px 22px; }
+  .card { padding: 20px 16px; }
+  .btn-grande { padding: 16px 8px; font-size: 1rem; }
+}
+
+@media print {
+  .topbar, body::after, .no-print { display: none !important; }
+  body { padding: 0; background: #ffffff; }
+  .card, .stat { box-shadow: none; border: 1px solid #e2e8f0; }
+}
