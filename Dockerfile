@@ -1,8 +1,3 @@
-FROM ubuntu:latest
-LABEL authors="sl102"
-
-ENTRYPOINT ["top", "-b"]
-
 FROM eclipse-temurin:25-jdk AS build
 
 WORKDIR /app
