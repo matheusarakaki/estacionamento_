@@ -46,7 +46,7 @@ public class VeiculoController {
         return "registrar-saida";
     }
 
-    @PostMapping("/saida/{id}")
+    @GetMapping("/saida/{id}")
     public String confirmarSaida(@PathVariable Long id, RedirectAttributes redirect) {
         try {
             VeiculoEntity veiculo = service.buscaVeiculoPorId(id);
